@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  events:
+    stdin_open: true
+    restart: always
+    build: ./
+    entrypoint: [ "sh", "entrypoint.sh"]
+    volumes:
+      - ./:/code
+      - ./.env:/code/.env
+    network_mode: host
+    env_file:
+      - .env
