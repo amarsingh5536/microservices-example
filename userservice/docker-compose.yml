@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  userservice:
+    stdin_open: true
+    restart: always
+    build: ./
+    entrypoint: ["sh", "entrypoint.sh"]
+    volumes:
+      - ./:/code
+      - ./.env:/code/.env
+    # network_mode: host 
+    ports:
+      - "8080:8000" # Maps port 8080 on the host to port 8000 inside the container.
+    env_file:
+      - .env
+      
+
