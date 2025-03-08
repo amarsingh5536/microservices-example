@@ -1,0 +1,11 @@
+fastapi==0.115.11
+flake8==3.8.3
+uvicorn==0.34.0
+PyJWT==2.10.1
+pydantic-settings==2.8.1
+typing-extensions
+python-multipart
+aiohttp==3.8.1 
+aiodns==2.0.0
+ipdb==0.13.2
+ipython==7.15.0
