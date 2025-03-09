@@ -4,4 +4,4 @@
 export PYTHONPATH=$PYTHONPATH:/app
 
 # Run uvicorn
-exec uvicorn main:app --reload --host 0.0.0.0 --port ${PORT}
+exec uvicorn main:app --reload --host ${HOST} --port ${PORT}
