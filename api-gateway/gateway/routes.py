@@ -1,9 +1,16 @@
-import os
-from fastapi import APIRouter
-from .controllers import healthcheck, authentication, users
-router = APIRouter()
+from conf import settings
+USERS_SERVICE_URL  = settings.USERS_SERVICE_URL
+EVENTS_SERVICE_URL = settings.EVENTS_SERVICE_URL
 
-#Define custom routes controller. 
-router.include_router(healthcheck.router)
-router.include_router(authentication.router)
-router.include_router(users.router)
+
+ROUTES = {
+	######################## USERS_SERVICE_URL ########################
+    "api/auth/token/": USERS_SERVICE_URL + '/api/auth/token/',
+    "api/accounts/users/": USERS_SERVICE_URL + '/api/accounts/users/',
+
+
+    ######################## EVENTS_SERVICE_URL ########################
+    "api/events/": EVENTS_SERVICE_URL + '/api/events/'
+
+
+}

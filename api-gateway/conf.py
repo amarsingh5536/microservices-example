@@ -7,5 +7,6 @@ class Settings(BaseSettings):
 
     # URLs for the microservices.
     USERS_SERVICE_URL: str = os.environ.get('USERS_SERVICE_URL')
+    EVENTS_SERVICE_URL: str = os.environ.get('EVENTS_SERVICE_URL')
 
 settings = Settings()
