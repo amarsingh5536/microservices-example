@@ -1,0 +1,4 @@
+{
+    "user.events.send_template_email" :"subscribe_send_template_email",
+    "user.events.create_notification" :"subscribe_create_notification"
+}

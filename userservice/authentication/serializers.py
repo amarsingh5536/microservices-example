@@ -94,6 +94,7 @@ class ForgotPasswordSerializer(serializers.Serializer):
         raw_otp = user.create_otp(purpose=OTP.PurposeChoices.RESET_PASSWORD)
 
         # Send Raw OTP via Email (and mobile if needed)
+        publish_forgot_password_otp_email(user, raw_otp)
 
 
 class ResetPasswordSerializer(serializers.Serializer):

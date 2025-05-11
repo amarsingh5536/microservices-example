@@ -4,5 +4,7 @@ Django==5.1.6
 djangorestframework
 djangorestframework-simplejwt
 django-smart-selects
+confluent-kafka
+pika
 python-decouple
 

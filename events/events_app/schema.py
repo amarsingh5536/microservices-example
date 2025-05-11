@@ -27,6 +27,17 @@ class EventAttendeeSchema(SQLAlchemyAutoSchema):
         load_instance = True
         sqla_session = db.session
 
+class EmailTemplateSchema(SQLAlchemyAutoSchema):
+    """
+    EmailTemplate schema.
+    """
+
+    class Meta:
+        model = models.EmailTemplate
+        sqla_session = db.Session
+        include_fk = True
+        load_instance = True
 
 event_schema = EventSchema()
 events_schema = EventSchema(many=True)
+email_template_schema = EmailTemplateSchema()

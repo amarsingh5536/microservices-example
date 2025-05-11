@@ -149,6 +149,12 @@ class User(AbstractUser, OtpMixin, PermissionsMixin):
         except cls.DoesNotExist:
             raise ValueError(_(f"User with this {identifier_type} does not exist."))
 
+    def get_full_name(self) -> str:
+        """
+        Returns the full name of the user.
+        """
+        return f"{self.first_name} {self.last_name}".strip() or self.email
+
     def __str__(self):
         return self.email
  

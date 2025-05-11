@@ -2,7 +2,9 @@ import uuid
 import random
 import string
 from rest_framework import serializers
+from django.db import transaction
 from django.contrib.auth.models import Permission
+from .publishers import (publish_user_created_welcome_email, publish_user_welcome_notification)
 from .models import (User, UserDetail, UserDocument, Department, Role)
 
 def generate_random_password(length=12):
@@ -29,17 +31,28 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["id", "email", "username", "first_name", "last_name", "password", "department", "sub_department", "role", "details"]
         extra_kwargs = {"password": {"write_only": True}}
 
+
     def create(self, validated_data):
-        details_data = validated_data.pop("details")
-        password = validated_data.pop("password")  or  generate_random_password()
+        details_data = validated_data.pop("details", {})
+        password = validated_data.pop("password", None) or generate_random_password()
 
-        user = User.objects.create(**validated_data)
-        user.set_password(password)  # Hash password
-        user.save()
+        with transaction.atomic():
+            user = User.objects.create(**validated_data)
+            user.set_password(password)
+            user.save()
 
-        UserDetail.objects.create(user=user, **details_data)
+            if details_data:
+                UserDetail.objects.create(user=user, **details_data)
+
+            # Publishes all user creation-related events.
+            self.publish_user_created_events(user, password)
 
         return user
+
+    def publish_user_created_events(self, user, password):
+        """Publishes all events triggered after a user is created."""
+        publish_user_created_welcome_email(user)
+        publish_user_welcome_notification(user)
 
     def update(self, instance, validated_data):
         details_data = validated_data.pop("details", None)

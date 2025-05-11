@@ -1,1 +1,1 @@
-from settings import app, db
+from settings import app, db, mail
